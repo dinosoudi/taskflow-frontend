@@ -8,17 +8,12 @@ import VerifyEmailPage from '../pages/auth/VerifyEmailPage';
 import ForgotPasswordPage from '../pages/auth/ForgotPasswordPage';
 import VerifyResetCodePage from '../pages/auth/VerifyResetCodePage';
 import ResetPasswordPage from '../pages/auth/ResetPasswordPage';
+import NotesPage from '../pages/notes/NotesPage';
 
-// ── Placeholders — se reemplazarán conforme avancemos ──────────────────────
-const DashboardPage = () => <div>DashboardPage (pendiente)</div>;
-const NotesPage = () => <div>NotesPage (pendiente)</div>;
+// ── Placeholders ────────────────────────────────────────────
 const TagsPage = () => <div>TagsPage (pendiente)</div>;
 const SettingsPage = () => <div>SettingsPage (pendiente)</div>;
 const NotFoundPage = () => <div>404 — Página no encontrada</div>;
-
-// ─────────────────────────────────────────────────────────────
-// Guards
-// ─────────────────────────────────────────────────────────────
 
 function ProtectedRoute() {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
@@ -40,10 +35,6 @@ function ForgotPasswordLayout() {
   );
 }
 
-// ─────────────────────────────────────────────────────────────
-// AppRouter
-// ─────────────────────────────────────────────────────────────
-
 export function AppRouter() {
   return (
     <BrowserRouter>
@@ -53,7 +44,6 @@ export function AppRouter() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/verify-email-sent" element={<VerifyEmailSentPage />} />
           <Route path="/verify-email" element={<VerifyEmailPage />} />
-
           <Route element={<ForgotPasswordLayout />}>
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
             <Route path="/forgot-password/verify" element={<VerifyResetCodePage />} />
@@ -62,7 +52,8 @@ export function AppRouter() {
         </Route>
 
         <Route element={<ProtectedRoute />}>
-          <Route path="/dashboard" element={<DashboardPage />} />
+          {/* /dashboard y /notes apuntan a la misma página */}
+          <Route path="/dashboard" element={<NotesPage />} />
           <Route path="/notes" element={<NotesPage />} />
           <Route path="/tags" element={<TagsPage />} />
           <Route path="/settings" element={<SettingsPage />} />
