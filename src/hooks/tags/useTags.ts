@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { tagsApi } from '@/api/tags.api';
+import { tokenStore } from '@/api/client';  // ← agregar
 
 export const tagsKeys = {
   all: ['tags'] as const,
@@ -9,7 +10,9 @@ export const tagsKeys = {
 export function useTags() {
   return useQuery({
     queryKey: tagsKeys.list(),
-    queryFn: () => tagsApi.getAll(),
+    queryFn: () => {
+      return tagsApi.getAll();
+    },
     staleTime: 5 * 60 * 1000,
   });
 }

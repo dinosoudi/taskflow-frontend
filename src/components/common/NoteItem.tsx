@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Trash2, MoreHorizontal } from 'lucide-react';
+import { Trash2, MoreHorizontal, Pencil } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useUpdateNote } from '@/hooks/notes/useUpdateNote';
 import { useDeleteNote } from '@/hooks/notes/useDeleteNote';
@@ -7,10 +7,11 @@ import type { NoteResponse } from '@/types';
 
 interface NoteItemProps {
   note: NoteResponse;
-  tagId?: string; // para el contexto del query
+  tagId?: string;
+  onEdit: (note: NoteResponse) => void;
 }
 
-export function NoteItem({ note, tagId }: NoteItemProps) {
+export function NoteItem({ note, tagId, onEdit }: NoteItemProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [confirming, setConfirming] = useState(false);
   const confirmTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -19,7 +20,6 @@ export function NoteItem({ note, tagId }: NoteItemProps) {
   const updateNote = useUpdateNote(tagId);
   const deleteNote = useDeleteNote(tagId);
 
-  // Cerrar menú al hacer click fuera
   useEffect(() => {
     if (!menuOpen) return;
     const handler = (e: MouseEvent) => {
@@ -45,13 +45,11 @@ export function NoteItem({ note, tagId }: NoteItemProps) {
 
   const handleDeleteClick = () => {
     if (confirming) {
-      // Segunda vez — confirmar borrado
       if (confirmTimerRef.current) clearTimeout(confirmTimerRef.current);
       deleteNote.mutate(note.id);
       setMenuOpen(false);
       setConfirming(false);
     } else {
-      // Primera vez — pedir confirmación, revertir en 3s si no confirma
       setConfirming(true);
       confirmTimerRef.current = setTimeout(() => setConfirming(false), 3000);
     }
@@ -88,8 +86,6 @@ export function NoteItem({ note, tagId }: NoteItemProps) {
         >
           {note.content}
         </p>
-
-        {/* Tag pill */}
         {note.tag && (
           <span
             className="inline-flex items-center gap-1 mt-1.5 px-2 py-0.5 rounded-full text-xs font-medium"
@@ -107,7 +103,7 @@ export function NoteItem({ note, tagId }: NoteItemProps) {
         )}
       </div>
 
-      {/* Menú de opciones */}
+      {/* Menú */}
       <div className="relative flex-shrink-0" ref={menuRef}>
         <button
           onClick={() => setMenuOpen((v) => !v)}
@@ -122,7 +118,15 @@ export function NoteItem({ note, tagId }: NoteItemProps) {
         </button>
 
         {menuOpen && (
-          <div className="absolute right-0 top-8 z-10 w-40 rounded-md border border-border bg-background shadow-md py-1">
+          <div className="absolute right-0 top-8 z-10 w-44 rounded-md border border-border bg-background shadow-md py-1">
+            <button
+              onClick={() => { onEdit(note); setMenuOpen(false); }}
+              className="w-full flex items-center gap-2 px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+            >
+              <Pencil className="h-3.5 w-3.5" />
+              Editar nota
+            </button>
+            <div className="my-1 border-t border-border" />
             <button
               onClick={handleDeleteClick}
               className={cn(

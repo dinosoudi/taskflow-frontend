@@ -9,9 +9,9 @@ import ForgotPasswordPage from '../pages/auth/ForgotPasswordPage';
 import VerifyResetCodePage from '../pages/auth/VerifyResetCodePage';
 import ResetPasswordPage from '../pages/auth/ResetPasswordPage';
 import NotesPage from '../pages/notes/NotesPage';
+import TagsPage from '../pages/tags/TagsPage';
 
-// ── Placeholders ────────────────────────────────────────────
-const TagsPage = () => <div>TagsPage (pendiente)</div>;
+// ── Placeholder ─────────────────────────────────────────────
 const SettingsPage = () => <div>SettingsPage (pendiente)</div>;
 const NotFoundPage = () => <div>404 — Página no encontrada</div>;
 
@@ -52,7 +52,6 @@ export function AppRouter() {
         </Route>
 
         <Route element={<ProtectedRoute />}>
-          {/* /dashboard y /notes apuntan a la misma página */}
           <Route path="/dashboard" element={<NotesPage />} />
           <Route path="/notes" element={<NotesPage />} />
           <Route path="/tags" element={<TagsPage />} />

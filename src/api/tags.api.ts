@@ -4,8 +4,14 @@ import type { TagRequest, TagResponse, TagsListResponse } from '../types';
 
 export const tagsApi = {
   getAll: async (): Promise<TagsListResponse> => {
-    const res = await apiClient.get<TagsListResponse>('/tags');
-    return res.data;
+    const res = await apiClient.get<TagResponse[] | TagsListResponse>('/tags');
+    // El backend devuelve array directo en lugar de { tags: [] }
+    // Normalizamos aquí para que el resto del código no cambie
+    const data = res.data;
+    if (Array.isArray(data)) {
+      return { tags: data };
+    }
+    return data;
   },
 
   create: async (data: TagRequest): Promise<TagResponse> => {
