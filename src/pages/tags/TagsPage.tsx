@@ -246,7 +246,7 @@ export default function TagsPage() {
   };
 
   return (
-    <div className="flex h-screen bg-background">
+    <div className="flex h-screen bg-background overflow-hidden">
       <AppSidebar />
 
       <main className="flex-1 overflow-y-auto">

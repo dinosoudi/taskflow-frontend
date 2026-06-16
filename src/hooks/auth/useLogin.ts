@@ -18,12 +18,8 @@ export function useLogin(setError: UseFormSetError<LoginFormValues>) {
   return useMutation({
     mutationFn: (data: LoginRequest) => authApi.login(data),
     onSuccess: (data) => {
-      console.log('[Login] data completa:', JSON.stringify(data));
-      console.log('[Login] tokens:', data.tokens);
       if (data.tokens) {
-        console.log('[Login] refreshToken:', data.tokens.refreshToken);
         setSession(data.user, data.tokens);
-        console.log('[Login] localStorage después de setSession:', localStorage.getItem('taskflow_refresh_token'));
         navigate('/dashboard');
       }
     },

@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
 import { tagsApi } from '@/api/tags.api';
-import { tokenStore } from '@/api/client';  // ← agregar
 
 export const tagsKeys = {
   all: ['tags'] as const,

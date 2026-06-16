@@ -10,9 +10,8 @@ import VerifyResetCodePage from '../pages/auth/VerifyResetCodePage';
 import ResetPasswordPage from '../pages/auth/ResetPasswordPage';
 import NotesPage from '../pages/notes/NotesPage';
 import TagsPage from '../pages/tags/TagsPage';
+import SettingsPage from '../pages/settings/SettingsPage';
 
-// ── Placeholder ─────────────────────────────────────────────
-const SettingsPage = () => <div>SettingsPage (pendiente)</div>;
 const NotFoundPage = () => <div>404 — Página no encontrada</div>;
 
 function ProtectedRoute() {

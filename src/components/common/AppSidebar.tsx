@@ -14,7 +14,7 @@ export function AppSidebar() {
   const isNotesPage = location.pathname === '/dashboard' || location.pathname === '/notes';
   const isTagsPage = location.pathname === '/tags';
 
-  const { data: tagsData, isError, error } = useTags();
+  const { data: tagsData } = useTags();
   const tags = tagsData?.tags ?? [];
 
   const { user, clearSession } = useAuthStore();
@@ -54,7 +54,7 @@ export function AppSidebar() {
       </div>
 
       {/* Navegación */}
-      <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-0.5">
+      <nav className="flex-1 py-4 px-3 space-y-0.5">
         {/* Todas las notas */}
         <button
           onClick={handleAllNotes}

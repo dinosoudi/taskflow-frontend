@@ -31,16 +31,13 @@ export const usersApi = {
     return res.data;
   },
 
-  // Optimistic update recomendado por el contrato — el componente aplica el cambio
-  // visualmente de inmediato y llama este endpoint en segundo plano
   updatePreferences: async (data: UpdatePreferencesRequest): Promise<PreferencesResponse> => {
     const res = await apiClient.patch<PreferencesResponse>('/users/me/preferences', data);
     return res.data;
   },
 
-  // Soft delete — el usuario tiene 30 días para cancelar
   deleteAccount: async (data: DeleteAccountRequest): Promise<MessageResponse> => {
-    const res = await apiClient.delete<MessageResponse>('/users/me/preferences', { data });
+    const res = await apiClient.delete<MessageResponse>('/users/me', { data });
     return res.data;
   },
 
